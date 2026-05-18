@@ -3,7 +3,7 @@ haproxy_image: "docker.io/library/haproxy:latest"
 prometheus_image: "docker.io/prom/prometheus:latest"
 grafana_image: "docker.io/grafana/grafana:latest"
 
-haproxy_port: 80
+haproxy_port: 8080
 prometheus_port: 9090
 grafana_port: 3000
 

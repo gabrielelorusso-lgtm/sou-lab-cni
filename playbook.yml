@@ -1,5 +1,5 @@
 ---
-- name: Test laaboratorio
+- name: Test laboratorio
   hosts: localhost
   become: false
   roles:
