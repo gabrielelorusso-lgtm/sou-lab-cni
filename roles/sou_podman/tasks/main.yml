@@ -4,7 +4,6 @@
     path: "{{ item}}"
     state: directory
     mode: '0755'
-  become: true
   loop:
     - "{{prometheus_data_dir}}"
     - "{{prometheus_config_dir}}"
@@ -14,7 +13,6 @@
     path: "{{ item}}"
     state: directory
     mode: '0755'
-  become: true
   loop:
     - "{{grafana_data_dir}}"
     - "{{grafana_config_dir}}"
@@ -24,7 +22,6 @@
     path: "{{ haproxy_config_dir}}"
     state: directory
     mode: '0755'
-  become: true
 - name: Genera configurazione HaProxy dal template
   template:
     src: haproxy.cfg.j2
