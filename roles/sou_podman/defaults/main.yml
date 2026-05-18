@@ -1,0 +1,14 @@
+---
+haproxy_image: "docker.io/library/haproxy:latest"
+prometheus_image: "docker.io/prom/prometheus:latest"
+grafana_image: "docker.io/grafana/grafana:latest"
+
+haproxy_port: 80
+prometheus_port: 9090
+grafana_port: 3000
+
+prometheus_data_dir: "/opt/prometheus/data"
+prometheus_config_dir: "/opt/prometheus/config"
+grafana_data_dir: "/opt/grafana/data"
+grafana_config_dir: "/opt/grafana/config" 
+haproxy_config_dir: "/opt/haproxy/config"

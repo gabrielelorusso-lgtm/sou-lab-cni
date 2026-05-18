@@ -1,0 +1,35 @@
+global
+    log stdout format raw local0
+    maxconn 4096
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
+
+# ─── Frontend: ascolta le richieste in arrivo ───
+frontend http_front
+    bind *:{{ haproxy_port }}
+    
+    # Smista il traffico in base all'URL
+    acl is_prometheus path_beg /prometheus
+    acl is_grafana    path_beg /grafana
+
+    use_backend prometheus_back if is_prometheus
+    use_backend grafana_back    if is_grafana
+
+# ─── Backend: Prometheus ───
+backend prometheus_back
+    option forwardfor
+    http-request set-path "%[path,regsub(^/prometheus,/)]"
+    server prometheus 127.0.0.1:{{ prometheus_port }} check
+
+# ─── Backend: Grafana ───
+backend grafana_back
+    option forwardfor
+    http-request set-path "%[path,regsub(^/grafana,/)]"
+    server grafana 127.0.0.1:{{ grafana_port }} check

@@ -1,0 +1,16 @@
+[server]
+http_port = {{ grafana_port }}
+root_url = %(protocol)s://%(domain)s:%(http_port)s/grafana/
+serve_from_sub_path = true
+
+[paths]
+data = /var/lib/grafana
+logs = /var/log/grafana
+
+[security]
+admin_user = admin
+admin_password = admin
+
+[analytics]
+reporting_enabled = false
+check_for_updates = false

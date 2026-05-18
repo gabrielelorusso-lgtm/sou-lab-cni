@@ -1,0 +1,77 @@
+---
+- name: Directory Prometheus
+  file:
+    path: "{{ item}}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{prometheus_data_dir}}"
+    - "{{prometheus_config_dir}}"
+
+- name: Directory Grafana
+  file:
+    path: "{{ item}}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{grafana_data_dir}}"
+    - "{{grafana_config_dir}}"
+
+- name: Directory HaProxy
+  file:
+    path: "{{ haproxy_config_dir}}"
+    state: directory
+    mode: '0755'
+
+- name: Genera configurazione HaProxy dal template
+  template:
+    src: haproxy.cfg.j2
+    dest: "{{ haproxy_config_dir }}/haproxy.cfg"
+  notify: Restart HaProxy 
+
+- name: Genera configurazione Prometheus dal template
+  template:
+    src: prometheus.yml.j2
+    dest: "{{ prometheus_config_dir }}/prometheus.yml"
+  notify: Restart Prometheus
+
+- name: Genera configurazione Grafana dal template
+  template:
+    src: grafana.ini.j2
+    dest: "{{ grafana_config_dir }}/grafana.ini"
+  notify: Restart Grafana
+  
+- name: Avvia container Prometheus
+  containers.podman.podman_container:
+    name: prometheus
+    image: "{{ prometheus_image }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "{{ prometheus_port }}:9090"
+    volumes:
+      - "{{ prometheus_data_dir }}:/prometheus"
+      - "{{ prometheus_config_dir }}/prometheus.yml:/etc/prometheus/prometheus.yml"
+
+- name: Avvia container Grafana
+  containers.podman.podman_container:
+    name: grafana
+    image: "{{ grafana_image }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "{{ grafana_port }}:3000"
+    volumes:
+      - "{{ grafana_data_dir }}:/var/lib/grafana"
+      - "{{ grafana_config_dir }}/grafana.ini:/etc/grafana/grafana.ini"
+
+- name: Avvia container HaProxy
+  containers.podman.podman_container:
+    name: haproxy
+    image: "{{ haproxy_image }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "{{ haproxy_port }}:80"
+    volumes:
+      - "{{ haproxy_config_dir }}/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
