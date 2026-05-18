@@ -1,6 +1,6 @@
 ---
 - name: Test laaboratorio
   hosts: localhost
-  become: true
+  become: false
   roles:
     - sou_podman

@@ -4,6 +4,7 @@
     path: "{{ item}}"
     state: directory
     mode: '0755'
+  become: true
   loop:
     - "{{prometheus_data_dir}}"
     - "{{prometheus_config_dir}}"
@@ -13,6 +14,7 @@
     path: "{{ item}}"
     state: directory
     mode: '0755'
+  become: true
   loop:
     - "{{grafana_data_dir}}"
     - "{{grafana_config_dir}}"
@@ -22,7 +24,7 @@
     path: "{{ haproxy_config_dir}}"
     state: directory
     mode: '0755'
-
+  become: true
 - name: Genera configurazione HaProxy dal template
   template:
     src: haproxy.cfg.j2
@@ -40,7 +42,6 @@
     src: grafana.ini.j2
     dest: "{{ grafana_config_dir }}/grafana.ini"
   notify: Restart Grafana
-  
 - name: Avvia container Prometheus
   containers.podman.podman_container:
     name: prometheus

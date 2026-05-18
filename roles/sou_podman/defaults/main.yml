@@ -7,8 +7,8 @@ haproxy_port: 80
 prometheus_port: 9090
 grafana_port: 3000
 
-prometheus_data_dir: "/opt/prometheus/data"
-prometheus_config_dir: "/opt/prometheus/config"
-grafana_data_dir: "/opt/grafana/data"
-grafana_config_dir: "/opt/grafana/config" 
-haproxy_config_dir: "/opt/haproxy/config"
+prometheus_data_dir: "{{ ansible_env.HOME }}/sou-lab/prometheus/data"
+prometheus_config_dir: "{{ ansible_env.HOME }}/sou-lab/prometheus/config"
+grafana_data_dir: "{{ ansible_env.HOME }}/sou-lab/grafana/data"
+grafana_config_dir: "{{ ansible_env.HOME }}/sou-lab/grafana/config"
+haproxy_config_dir: "{{ ansible_env.HOME }}/sou-lab/haproxy/config"
