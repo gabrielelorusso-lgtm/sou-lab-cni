@@ -13,7 +13,7 @@ defaults
 
 # ─── Frontend: ascolta le richieste in arrivo ───
 frontend http_front
-    bind *:{{ haproxy_port }}
+    bind *:80
     
     # Smista il traffico in base all'URL
     acl is_prometheus path_beg /prometheus
