@@ -12,3 +12,5 @@ prometheus_config_dir: "{{ ansible_env.HOME }}/sou-lab/prometheus/config"
 grafana_data_dir: "{{ ansible_env.HOME }}/sou-lab/grafana/data"
 grafana_config_dir: "{{ ansible_env.HOME }}/sou-lab/grafana/config"
 haproxy_config_dir: "{{ ansible_env.HOME }}/sou-lab/haproxy/config"
+
+podman_host: "192.168.127.2"
