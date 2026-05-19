@@ -47,6 +47,11 @@
     image: "{{ prometheus_image }}"
     state: started
     restart_policy: always
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.external-url=http://localhost:{{ haproxy_port }}/prometheus/"
+      - "--web.route-prefix=/prometheus"
     ports:
       - "{{ prometheus_port }}:9090"
     volumes:
@@ -72,6 +77,6 @@
     state: started
     restart_policy: always
     ports:
-      - "{{ haproxy_port }}:80"
+      - "{{ haproxy_port }}:{{ haproxy_port }}"
     volumes:
       - "{{ haproxy_config_dir }}/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"

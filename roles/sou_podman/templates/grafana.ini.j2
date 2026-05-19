@@ -1,6 +1,6 @@
 [server]
 http_port = {{ grafana_port }}
-root_url = %(protocol)s://%(domain)s:%(http_port)s/grafana/
+root_url = http://localhost:{{ haproxy_port }}/grafana/
 serve_from_sub_path = true
 
 [paths]

@@ -13,7 +13,7 @@ defaults
 
 # ─── Frontend: ascolta le richieste in arrivo ───
 frontend http_front
-    bind *:80
+    bind *:{{ haproxy_port }}
     
     # Smista il traffico in base all'URL
     acl is_prometheus path_beg /prometheus
@@ -25,11 +25,9 @@ frontend http_front
 # ─── Backend: Prometheus ───
 backend prometheus_back
     option forwardfor
-    http-request set-path "%[path,regsub(^/prometheus,/)]"
     server prometheus {{ podman_host }}:{{ prometheus_port }} check
 
 # ─── Backend: Grafana ───
 backend grafana_back
     option forwardfor
-    http-request set-path "%[path,regsub(^/grafana,/)]"
     server grafana {{ podman_host }}:{{ grafana_port }} check
