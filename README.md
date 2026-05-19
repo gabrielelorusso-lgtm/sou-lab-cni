@@ -61,7 +61,7 @@ podman machine start
 ## Come eseguire
 
 ```bash
-git clone https://github.com/TUO-USERNAME/sou-lab-cni.git
+git clone <repo-name>
 cd sou-lab-cni
 ansible-playbook playbook.yml --ask-become-pass
 ```
